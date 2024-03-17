@@ -1,10 +1,17 @@
 import configparser
+import logging
+from logging.config import fileConfig
 from scripts.utils import WindTurbineDataProcessor
 
 
 def main():
-    config = configparser.ConfigParser()
+    # Logging setup
+    fileConfig('logging_config.ini')
+    logger = logging.getLogger(__name__)
+    logger.info("Application started")
 
+    # Config params setup
+    config = configparser.ConfigParser()
     config.read('config.ini')
 
     # Extract configuration values
@@ -34,9 +41,7 @@ def main():
     # Calculate aggregates
     processor.calculate_aggregates()
 
-    # Show results or save them
-    processor.df_preprocessed.show()
-
+    # Write results to db
     processor.write_to_database()
 
 
