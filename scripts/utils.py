@@ -1,9 +1,9 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
-
-import logging
 from logging.config import fileConfig
+import logging
+
 
 class WindTurbineDataProcessor:
     """
@@ -140,7 +140,7 @@ class WindTurbineDataProcessor:
                 raise ValueError("Database configuration is incomplete.")
             self.df_preprocessed.write.jdbc(url=self.db_config['jdbc_url'],
                                             table=self.db_config['table_name'],
-                                            mode="overwrite",
+                                            mode="append",
                                             properties=self.db_config['properties'])
             self.logger.info("Data successfully written to database")
         except Exception as e:
@@ -148,4 +148,3 @@ class WindTurbineDataProcessor:
             raise
 
 
-   
