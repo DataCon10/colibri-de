@@ -21,6 +21,9 @@ The final data is then prepared for storage in a database.
 - Missing or invalid `power_output` values are represented as NULL, 0, or blank strings in the dataset.
 - The system configuration, including data paths and database credentials, is specified in a `config.ini` file.
 - The timestamp format in the data is 'dd/MM/yyyy HH:mm:ss'.
+- A database exists that stores the output data
+  - Assumes that the timestamp and turbine_id columns will always be unique in the raw csv files and
+  can act as a composite key
 
 ## Installation
 

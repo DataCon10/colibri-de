@@ -59,12 +59,20 @@ class WindTurbineDataProcessor:
         """Standardises null values and processes timestamps in the DataFrame."""
         self.logger.info("Starting data preprocessing")
         try:
+            self.add_hash_column()
             self.standardise_null_values()
             self.process_timestamps()
             self.logger.info("Data preprocessing completed successfully")
         except Exception as e:
             self.logger.error("Error during data preprocessing: %s", e)
             raise
+
+    def add_hash_column(self):
+        """
+        Adds a hash column to the DataFrame based on 'timestamp' and 'turbine_id' to uniquely identify rows.
+        """
+        self.df = self.df.withColumn("pk_hash", F.md5(F.concat_ws("|", "turbine_id", "timestamp")))
+        self.logger.info("Hash column added to DataFrame")
 
     def standardise_null_values(self):
         """
